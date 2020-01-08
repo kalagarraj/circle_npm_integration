@@ -16,7 +16,7 @@ jobs:
       - run: echo inside second job
       - run: echo publish_npm param = << pipeline.parameters.publish_npm >>
       - when:
-          condition: << pipeline.parameters.deploy >>
+          condition: << pipeline.parameters.publish_npm >>
           steps:
             - run: echo inside condition << pipeline.parameters.publish_npm >>
 orbs:
