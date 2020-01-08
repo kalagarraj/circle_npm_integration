@@ -40,9 +40,11 @@ jobs:
 workflows:
   version: 2
   build-only:
+    unless: << pipeline.parameters.publish_npm >>
     jobs:
       - build
   build-and-deploy:
+    when: << pipeline.parameters.publish_npm >>
     jobs:
       - build
       - hold:
