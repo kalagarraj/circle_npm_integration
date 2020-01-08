@@ -29,6 +29,8 @@ jobs:
       - when:
           condition: << pipeline.parameters.publish_npm >>
           steps:
+            - hold:
+                type: approval
             - run: echo inside condition << pipeline.parameters.publish_npm >>
             - attach_workspace:
                 at: ~/build_and_publish
@@ -42,14 +44,8 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - hold: # <<< A job that will require manual approval in the CircleCI web application.
-          type: approval # <<< This key-value pair will set your workflow to a status of "On Hold"
-          requires: # We only run the "hold" job when build has succeeded
-            - build
-          when:
-            condition: << pipeline.parameters.publish_npm >>
       - publish:
           requires:
-            - hold
+            - build
 orbs:
   node: circleci/node@1.1
