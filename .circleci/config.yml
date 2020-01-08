@@ -14,7 +14,7 @@ jobs:
       - checkout
       - run: echo "Kannan test"
       - run: echo inside second job
-      - run: echo publish_npm param = << parameters.publish_npm >>
-      - run: cat << parameters.file >>
+      - run: echo publish_npm param = << pipeline.parameters.publish_npm >>
+      - run: cat << pipeline.parameters.file >>
 orbs:
   node: circleci/node@1.1
