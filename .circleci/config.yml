@@ -7,6 +7,7 @@ parameters:
 
 jobs:
   build:
+    working_directory: ~/
     executor:
       name: node/default
       tag: '10.16'
@@ -15,9 +16,42 @@ jobs:
       - run: echo "Kannan test"
       - run: echo inside second job
       - run: echo publish_npm param = << pipeline.parameters.publish_npm >>
-      - when:
-          condition: << pipeline.parameters.publish_npm >>
-          steps:
-            - run: echo inside condition << pipeline.parameters.publish_npm >>
+      - persist_to_workspace:
+          root: ~/
+          paths: .
+  publish:
+    working_directory: ~/
+    executor:
+      name: node/default
+      tag: '10.16'
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: echo Publish commerce_sdk to npm
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+      - run: echo using lerna publish
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - hold: # <<< A job that will require manual approval in the CircleCI web application.
+          when:
+            condition: << pipeline.parameters.publish_npm >>
+            steps:
+              - run: echo inside condition << pipeline.parameters.publish_npm >>
+          type: approval # <<< This key-value pair will set your workflow to a status of "On Hold"
+          requires: # We only run the "hold" job when build has succeeded
+            - build
+      - publish:
+          when:
+            condition: << pipeline.parameters.publish_npm >>
+            steps:
+              - run: echo inside condition in publish << pipeline.parameters.publish_npm >>
+          requires:
+            - hold
 orbs:
   node: circleci/node@1.1
