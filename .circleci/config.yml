@@ -29,8 +29,6 @@ jobs:
       - when:
           condition: << pipeline.parameters.publish_npm >>
           steps:
-            - hold:
-                type: approval
             - run: echo inside condition << pipeline.parameters.publish_npm >>
             - attach_workspace:
                 at: ~/build_and_publish
@@ -41,11 +39,18 @@ jobs:
             - run: echo using lerna publish
 workflows:
   version: 2
+  build-only:
+    jobs:
+      - build
   build-and-deploy:
     jobs:
       - build
-      - publish:
+      - hold:
+          type: approval
           requires:
             - build
+      - publish:
+          requires:
+            - hold
 orbs:
   node: circleci/node@1.1
