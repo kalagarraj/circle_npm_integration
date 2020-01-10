@@ -1,5 +1,5 @@
 {
-  "name": "generator",
+  "name": "@testprivate/generator",
   "version": "1.0.1-alpha.0",
   "description": "",
   "main": "index.js",
@@ -7,5 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "gitHead": "0129860fed0b31548592b860294d95e64577eff3"
 }
