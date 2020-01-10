@@ -43,10 +43,6 @@ jobs:
             - run:
                 name: Authenticate with registry
                 command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-            - run: mkdir ~/.ssh
-            - run:
-                name: Accept new ssh connections
-                command: echo "StrictHostKeyChecking accept-new" > ~/.ssh/config
             - run: echo print npmrc, establish known host for github and Publish commerce_sdk to npm
             - run: cat ~/.npmrc
             - run: cat ~/.ssh/config
