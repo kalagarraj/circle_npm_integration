@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo Running test",
-    "publish": "echo Publishing"
+    "publish": "lerna publish prepatch --yes"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/kalagarraj/circle_npm_integration/issues"
   },
-  "homepage": "https://github.com/kalagarraj/circle_npm_integration#readme"
+  "homepage": "https://github.com/kalagarraj/circle_npm_integration#readme",
+  "devDependencies": {
+    "lerna": "^3.18.4"
+  }
 }
