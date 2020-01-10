@@ -20,7 +20,7 @@ jobs:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - persist_to_workspace:
-          root: ~/
+          root: ~/build_and_publish
           paths: .
   publish:
     working_directory: ~/build_and_publish
