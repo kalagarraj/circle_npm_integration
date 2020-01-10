@@ -7,7 +7,7 @@
     "test": "echo Running test",
     "publish": "lerna publish prerelease --yes --no-verify-access"
   },
-  "author": "Kannan",
+  "author": "Salesforce",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kalagarraj/circle_npm_integration/issues"
