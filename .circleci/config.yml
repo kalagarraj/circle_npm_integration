@@ -16,6 +16,9 @@ jobs:
       - run: echo "Kannan test"
       - run: echo inside second job
       - run: echo publish_npm param = << pipeline.parameters.publish_npm >>
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - persist_to_workspace:
           root: ~/
           paths: .
@@ -32,11 +35,8 @@ jobs:
             - run: echo inside condition << pipeline.parameters.publish_npm >>
             - attach_workspace:
                 at: ~/build_and_publish
-            - run: echo Publish commerce_sdk to npm
-            - run:
-                name: Authenticate with registry
-                command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-            - run: echo using lerna publish
+            - run: echo print npmrc and Publish commerce_sdk to npm
+            - run: cat ~/.npmrc
             - run: lerna publish prerelease --yes
 workflows:
   version: 2
