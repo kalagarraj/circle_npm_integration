@@ -13,6 +13,9 @@ jobs:
       tag: '10.16'
     steps:
       - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
       - run: echo "Kannan test"
       - run: echo inside second job
       - run: echo publish_npm param = << pipeline.parameters.publish_npm >>
