@@ -28,6 +28,10 @@ jobs:
       name: node/default
       tag: '10.16'
     steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
       - run: echo Publish commerce_sdk to npm
       - when:
           condition: << pipeline.parameters.publish_npm >>
