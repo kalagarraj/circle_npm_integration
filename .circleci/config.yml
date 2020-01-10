@@ -33,6 +33,11 @@ jobs:
           condition: << pipeline.parameters.publish_npm >>
           steps:
             - run: echo inside condition << pipeline.parameters.publish_npm >>
+            - run:
+                name: "Configuring git"
+                command: |
+                  git config --global user.email "kalagarraj@salesforce.com"
+                  git config --global user.name "kalagarraj"
             - attach_workspace:
                 at: ~/build_and_publish
             - run:
