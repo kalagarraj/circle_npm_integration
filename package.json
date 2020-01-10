@@ -7,10 +7,6 @@
     "test": "echo Running test",
     "publish": "lerna publish prerelease --yes"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kalagarraj/circle_npm_integration.git"
-  },
   "author": "Kannan",
   "license": "ISC",
   "bugs": {
