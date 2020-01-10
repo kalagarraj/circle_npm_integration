@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   publish_npm:
     type: boolean
-    default: false
+    default: true
 
 jobs:
   build:
@@ -37,6 +37,7 @@ jobs:
                 name: Authenticate with registry
                 command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
             - run: echo using lerna publish
+            - run: lerna publish prerelease --yes
 workflows:
   version: 2
   build-only:
