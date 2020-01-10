@@ -28,10 +28,6 @@ jobs:
       name: node/default
       tag: '10.16'
     steps:
-      - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
       - run: echo Publish commerce_sdk to npm
       - when:
           condition: << pipeline.parameters.publish_npm >>
@@ -44,7 +40,7 @@ jobs:
                 command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
             - run: echo print npmrc and Publish commerce_sdk to npm
             - run: cat ~/.npmrc
-            - run: lerna publish prerelease --yes
+            - run: npm run publish
 workflows:
   version: 2
   build-only:
