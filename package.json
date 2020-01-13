@@ -5,18 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo Running test",
-    "publish": "lerna publish prepatch --yes"
+    "publish": "lerna publish prerelease --yes --no-verify-access"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kalagarraj/circle_npm_integration.git"
-  },
-  "author": "Kannan",
+  "author": "Salesforce",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kalagarraj/circle_npm_integration/issues"
-  },
-  "homepage": "https://github.com/kalagarraj/circle_npm_integration#readme",
   "devDependencies": {
     "lerna": "^3.18.4"
   }
