@@ -12,6 +12,9 @@ jobs:
       name: node/default
       tag: '10.16'
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "78:6d:b4:67:eb:35:d4:a0:63:af:c2:32:f1:94:9a:5f"
       - checkout
       - node/with-cache:
           steps:
@@ -32,6 +35,9 @@ jobs:
       - when:
           condition: << pipeline.parameters.publish_npm >>
           steps:
+            - add_ssh_keys:
+                fingerprints:
+                  - "78:6d:b4:67:eb:35:d4:a0:63:af:c2:32:f1:94:9a:5f"
             - run: echo inside condition << pipeline.parameters.publish_npm >>
             - run:
                 name: "Configuring git"

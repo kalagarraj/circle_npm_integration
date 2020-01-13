@@ -9,10 +9,6 @@
   },
   "author": "Salesforce",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kalagarraj/circle_npm_integration/issues"
-  },
-  "homepage": "https://github.com/kalagarraj/circle_npm_integration#readme",
   "devDependencies": {
     "lerna": "^3.18.4"
   }
