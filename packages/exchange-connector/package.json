@@ -1,6 +1,6 @@
 {
   "name": "@testprivate/exchange-connector",
-  "version": "1.0.1-alpha.8",
+  "version": "1.0.1-alpha.9",
   "description": "",
   "main": "index.js",
   "scripts": {
