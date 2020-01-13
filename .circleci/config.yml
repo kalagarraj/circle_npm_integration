@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   publish_npm:
     type: boolean
-    default: true
+    default: false
 
 jobs:
   build:
