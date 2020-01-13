@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo Running test",
-    "publish": "lerna publish from-package --yes"
+    "publish": "lerna publish from-package --yes --git-head 391cc5ef7aa16d1af3dd122d96cb31ed81f3eabd"
   },
   "author": "Salesforce",
   "license": "ISC",
