@@ -7,7 +7,7 @@ parameters:
 
   lerna_command:
       type: string
-      default: "publish from-package --yes"
+      default: "publish from-package -- --yes"
 jobs:
   build:
     working_directory: ~/build_and_publish
