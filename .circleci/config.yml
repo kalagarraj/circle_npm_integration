@@ -5,6 +5,9 @@ parameters:
     type: boolean
     default: false
 
+  lerna_command:
+      type: string
+      default: "publish from-package --yes"
 jobs:
   build:
     working_directory: ~/build_and_publish
@@ -24,6 +27,7 @@ jobs:
       - persist_to_workspace:
           root: ~/build_and_publish
           paths: .
+      - run: npm run publish << pipeline.parameters.lerna_command >>
   publish:
     working_directory: ~/build_and_publish
     executor:
