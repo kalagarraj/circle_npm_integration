@@ -28,7 +28,6 @@ jobs:
       - persist_to_workspace:
           root: ~/build_and_publish
           paths: .
-      - run: npm run publish << pipeline.parameters.lerna_command >>
   publish:
     working_directory: ~/build_and_publish
     executor:
@@ -49,7 +48,7 @@ jobs:
                 command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
             - run: echo print npmrc, establish known host for github and Publish commerce_sdk to npm
             - run: cat ~/.npmrc
-            - run: npm run publish
+            - run: npm run publish << pipeline.parameters.lerna_command >>
 workflows:
   version: 2
   build-only:
