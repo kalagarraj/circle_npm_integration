@@ -34,11 +34,11 @@ jobs:
       - when:
           condition: << pipeline.parameters.publish_npm >>
           steps:
-            - run: ls -lart ~/
-            - run: ls -lart ~/build_and_publish
             - run: echo inside condition << pipeline.parameters.publish_npm >>
             - attach_workspace:
                 at: ~/build_and_publish
+            - run: ls -lart ~/
+            - run: ls -lart ~/build_and_publish
             - run:
                 name: Authenticate with registry
                 command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
