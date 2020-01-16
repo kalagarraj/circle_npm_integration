@@ -6,6 +6,8 @@ jobs:
       tag: '10.16'
     steps:
       - checkout
+      - run: echo -e "$GPG_KEY" | gpg --import
+      - run: gpg --list-secret-keys --keyid-format LONG
       - node/with-cache:
           steps:
             - run: npm install
@@ -23,14 +25,18 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/build_and_publish
+      - run: echo -e "$GPG_KEY" | gpg --import
+      - run: gpg --list-secret-keys --keyid-format LONG
       - run: git config --global user.email "kannalag28@yahoo.com"
       - run: git config --global user.name "kannalag28"
+      - run: git config --global user.signingkey EFC04866CB705546
+      - run: git config --global commit.gpgsign true
       - add_ssh_keys:
           fingerprints:
             - "ce:87:9b:64:30:84:54:85:fd:b9:9f:12:8b:11:8d:67"
       - run:
           name: Create npmrc file to authenticate with npm registry.
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > ~/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run: npm run publish
 
 workflows:
