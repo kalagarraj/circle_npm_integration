@@ -7,6 +7,7 @@ jobs:
     steps:
       - checkout
       - run: echo -e "$GPG_KEY" | gpg --import
+      - run: gpg --list-secret-keys --keyid-format LONG
       - node/with-cache:
           steps:
             - run: npm install
@@ -22,11 +23,12 @@ jobs:
     steps:
       - run: echo Publish commerce_sdk to npm
       - checkout
-      - run: echo -e "$GPG_KEY" | gpg --import
       - attach_workspace:
           at: ~/build_and_publish
+      - run: echo -e "$GPG_KEY" | gpg --import
       - run: git config --global user.email "kannalag28@yahoo.com"
       - run: git config --global user.name "kannalag28"
+      - run:
       - add_ssh_keys:
           fingerprints:
             - "ce:87:9b:64:30:84:54:85:fd:b9:9f:12:8b:11:8d:67"
