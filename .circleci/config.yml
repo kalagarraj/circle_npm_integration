@@ -6,7 +6,7 @@ jobs:
       tag: '10.16'
     steps:
       - checkout
-      - run: echo -e "$NPM_TOKEN" | gpg --import
+      - run: echo -e "$GPG_KEY" | gpg --import
       - node/with-cache:
           steps:
             - run: npm install
@@ -22,7 +22,7 @@ jobs:
     steps:
       - run: echo Publish commerce_sdk to npm
       - checkout
-      - run: echo -e "$NPM_TOKEN" | gpg --import
+      - run: echo -e "$GPG_KEY" | gpg --import
       - attach_workspace:
           at: ~/build_and_publish
       - run: git config --global user.email "kannalag28@yahoo.com"
