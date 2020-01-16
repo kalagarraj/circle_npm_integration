@@ -27,8 +27,8 @@ jobs:
           at: ~/build_and_publish
       - run: echo -e "$GPG_KEY" | gpg --import
       - run: gpg --list-secret-keys --keyid-format LONG
-      - run: git config --global user.email "kannalag28@yahoo.com"
-      - run: git config --global user.name "kannalag28"
+      - run: git config --global user.email "kalagarraj@salesforce.com"
+      - run: git config --global user.name "kalagarraj"
       - run: git config --global user.signingkey EFC04866CB705546
       - run: git config --global commit.gpgsign true
       - add_ssh_keys:
