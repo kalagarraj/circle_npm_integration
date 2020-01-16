@@ -21,6 +21,9 @@ jobs:
     steps:
       - run: echo Publish commerce_sdk to npm
       - checkout
+      - run:
+          name: import gpg key
+          command: echo -e "$NPM_TOKEN" | gpg --import
       - attach_workspace:
           at: ~/build_and_publish
       - run: git config --global user.email "kannalag28@yahoo.com"
@@ -30,7 +33,7 @@ jobs:
             - "ce:87:9b:64:30:84:54:85:fd:b9:9f:12:8b:11:8d:67"
       - run:
           name: Create npmrc file to authenticate with npm registry.
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > ~/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run: npm run publish
 
 workflows:
