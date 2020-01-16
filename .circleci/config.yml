@@ -28,6 +28,8 @@ jobs:
       - run: echo -e "$GPG_KEY" | gpg --import
       - run: git config --global user.email "kannalag28@yahoo.com"
       - run: git config --global user.name "kannalag28"
+      - run: git config --global user.signingkey EFC04866CB705546
+      - run: git config --global commit.gpgsign true
       - add_ssh_keys:
           fingerprints:
             - "ce:87:9b:64:30:84:54:85:fd:b9:9f:12:8b:11:8d:67"
