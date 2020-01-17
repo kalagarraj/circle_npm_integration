@@ -6,6 +6,7 @@ jobs:
       tag: '10.16'
     steps:
       - checkout
+      - run: uname -a
       - run: echo -e "$GPG_KEY" | gpg --import
       - run: gpg --list-secret-keys --keyid-format LONG
       - node/with-cache:
@@ -20,6 +21,7 @@ jobs:
     steps:
       - run: echo Publish commerce_sdk to npm
       - checkout
+      # Add read/write ssh key's finger print in order to push the tags
       - add_ssh_keys:
           fingerprints:
             - "ce:87:9b:64:30:84:54:85:fd:b9:9f:12:8b:11:8d:67"
