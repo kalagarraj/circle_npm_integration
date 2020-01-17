@@ -18,11 +18,11 @@ jobs:
       name: node/default
       tag: '10.16'
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "$GITHUB_HOST_SSH_KEY"
       - run: echo Publish commerce_sdk to npm
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "ce:87:9b:64:30:84:54:85:fd:b9:9f:12:8b:11:8d:67"
       - node/with-cache:
           steps:
             - run: npm install
