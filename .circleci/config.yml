@@ -15,6 +15,14 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm install
+  test:
+    working_directory: ~/test_build
+    executor:
+      name: node/default
+      tag: '10.16'
+    steps:
+      - run: uname -a
+      - run: hub
 
   publish:
     working_directory: ~/build_and_publish
@@ -46,6 +54,7 @@ workflows:
   version: 2
   build-only:
     jobs:
+      - test
       - build:
           filters:
             branches:
