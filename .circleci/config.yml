@@ -7,20 +7,14 @@ jobs:
     steps:
       - checkout
       - run: uname -a
+      - run: sudo add-apt-repository ppa:cpick/hub
+      - run: sudo apt-get update
       - run: sudo apt-get install hub
       - run: echo -e "$GPG_KEY" | gpg --import
       - run: gpg --list-secret-keys --keyid-format LONG
       - node/with-cache:
           steps:
             - run: npm install
-  test:
-    working_directory: ~/test_build
-    executor:
-      name: node/default
-      tag: '10.16'
-    steps:
-      - run: uname -a
-      - run: sudo snap install --classic hub
 
   publish:
     working_directory: ~/build_and_publish
@@ -52,7 +46,6 @@ workflows:
   version: 2
   build-only:
     jobs:
-      - test
       - build:
           filters:
             branches:
