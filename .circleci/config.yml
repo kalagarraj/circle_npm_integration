@@ -22,7 +22,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "ce:87:9b:64:30:84:54:85:fd:b9:9f:12:8b:11:8d:67"
+            - "$GITHUB_HOST_SSH_KEY"
       - node/with-cache:
           steps:
             - run: npm install
