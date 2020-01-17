@@ -1,6 +1,6 @@
 jobs:
   build:
-    working_directory: ~/build_and_publish
+    working_directory: ~/build
     executor:
       name: node/default
       tag: '10.16'
@@ -11,9 +11,6 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm install
-      - persist_to_workspace:
-          root: ~/build_and_publish
-          paths: .
 
   publish:
     working_directory: ~/build_and_publish
@@ -23,17 +20,18 @@ jobs:
     steps:
       - run: echo Publish commerce_sdk to npm
       - checkout
-      - attach_workspace:
-          at: ~/build_and_publish
+      - node/with-cache:
+          steps:
+            - run: npm install
       - run: echo -e "$GPG_KEY" | gpg --import
       - run: gpg --list-secret-keys --keyid-format LONG
-      - run: git config --global user.email "kalagarraj@salesforce.com"
-      - run: git config --global user.name "kalagarraj"
-      - run: git config --global user.signingkey EFC04866CB705546
+      - run: git config --global user.email "$GITHUB_PUBLISH_EMAIL"
+      - run: git config --global user.name "$GITHUB_PUBLISH_USER"
+      - run: git config --global user.signingkey $GITHUB_GPG_SIGN_KEY_ID
       - run: git config --global commit.gpgsign true
       - add_ssh_keys:
           fingerprints:
-            - "ce:87:9b:64:30:84:54:85:fd:b9:9f:12:8b:11:8d:67"
+            - "$GITHUB_HOST_SSH_KEY"
       - run:
           name: Create npmrc file to authenticate with npm registry.
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
