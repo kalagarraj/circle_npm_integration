@@ -6,6 +6,13 @@ jobs:
       tag: '10.16'
     steps:
       - checkout
+      - run: >
+          curl 'https://api.github.com/repos/$GITHUB_OAUTH_TOKEN_OWNER/$CIRCLE_PROJECT_REPONAME/pulls'
+          -X POST
+          -H "Content-Type: application/json"
+          -H "Authorization: token $GITHUB_OAUTH_TOKEN"
+          -H "Accept: application/vnd.github.v3+json"
+          -d '{"title":"Publish from $CIRCLE_BRANCH","body":"Merge publish to master from $CIRCLE_BRANCH with commit sha1 as $CIRCLE_SHA1","head":"$CIRCLE_BRANCH","base":"master"}'
       - run: echo -e "$GPG_KEY" | gpg --import
       - node/with-cache:
           steps:
@@ -39,10 +46,10 @@ jobs:
       - run: >
           curl 'https://api.github.com/repos/$GITHUB_OAUTH_TOKEN_OWNER/$CIRCLE_PROJECT_REPONAME/pulls'
           -X POST
-          -d '{"title":"Publish from $CIRCLE_BRANCH","body":"Merge publish to master from $CIRCLE_BRANCH with commit sha1 as $CIRCLE_SHA1","head":"$CIRCLE_BRANCH","base":"master"}'
           -H "Content-Type: application/json"
           -H "Authorization: token $GITHUB_OAUTH_TOKEN"
           -H "Accept: application/vnd.github.v3+json"
+          -d '{"title":"Publish from $CIRCLE_BRANCH","body":"Merge publish to master from $CIRCLE_BRANCH with commit sha1 as $CIRCLE_SHA1","head":"$CIRCLE_BRANCH","base":"master"}'
 
 workflows:
   version: 2
