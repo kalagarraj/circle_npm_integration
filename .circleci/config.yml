@@ -6,23 +6,10 @@ jobs:
       tag: '10.16'
     steps:
       - checkout
-      - run: uname -a
-      - run: sudo add-apt-repository ppa:cpick/hub
-      - run: sudo apt-get update
-      - run: sudo apt-get install hub
       - run: echo -e "$GPG_KEY" | gpg --import
-      - run: gpg --list-secret-keys --keyid-format LONG
       - node/with-cache:
           steps:
             - run: npm install
-  test:
-    working_directory: ~/test_build
-    executor:
-      name: node/default
-      tag: '10.16'
-    steps:
-      - run: uname -a
-      - run: hub
 
   publish:
     working_directory: ~/build_and_publish
@@ -49,12 +36,18 @@ jobs:
           name: Create npmrc file to authenticate with npm registry.
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run: npm run publish
+      - run: >
+          curl 'https://api.github.com/repos/$GITHUB_OAUTH_TOKEN_OWNER/$CIRCLE_PROJECT_REPONAME/pulls'
+          -X POST
+          -d '{"title":"Publish from $CIRCLE_BRANCH","body":"Merge publish to master from $CIRCLE_BRANCH with commit sha1 as $CIRCLE_SHA1","head":"$CIRCLE_BRANCH","base":"master"}'
+          -H "Content-Type: application/json"
+          -H "Authorization: token $GITHUB_OAUTH_TOKEN"
+          -H "Accept: application/vnd.github.v3+json"
 
 workflows:
   version: 2
   build-only:
     jobs:
-      - test
       - build:
           filters:
             branches:
