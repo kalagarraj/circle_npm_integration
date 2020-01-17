@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run: echo $GITHUB_OAUTH_TOKEN_OWNER , token = $GITHUB_OAUTH_TOKEN, project repo $CIRCLE_PROJECT_REPONAME, branch $CIRCLE_BRANCH, sha1 $CIRCLE_SHA1
       - run: >
-          curl 'https://api.github.com/repos/$GITHUB_OAUTH_TOKEN_OWNER/$CIRCLE_PROJECT_REPONAME/pulls' -X POST -H 'Content-Type: application/json' -H 'Authorization: token $GITHUB_OAUTH_TOKEN' -H 'Accept: application/vnd.github.v3+json' -d '{"title":"Publish from $CIRCLE_BRANCH","body":"Merge publish to master from $CIRCLE_BRANCH with commit sha1 as $CIRCLE_SHA1","head":"$CIRCLE_BRANCH","base":"master"}'
+          curl 'https://api.github.com/repos/$GITHUB_OAUTH_TOKEN_OWNER/$CIRCLE_PROJECT_REPONAME/pulls' -X POST -H 'Content-Type: application/json' -H 'Authorization: token c4cd9441d4cd982680c21a644fbe9c7269ed22b3' -H 'Accept: application/vnd.github.v3+json' -d '{"title":"Publish from $CIRCLE_BRANCH","body":"Merge publish to master from $CIRCLE_BRANCH with commit sha1 as $CIRCLE_SHA1","head":"$CIRCLE_BRANCH","base":"master"}'
       - run: echo -e "$GPG_KEY" | gpg --import
       - node/with-cache:
           steps:
