@@ -14,6 +14,22 @@ async function createPullRequest( arguments, ) {
         auth: token,
         baseUrl: 'https://api.github.com'
     });
+
+    const listOfExistingPullRequests = await octokit.pulls.list( {
+        "owner" : owner,
+        "repo": "circle_npm_integration",
+        "head" : owner.concat(":").concat(head),
+        "base": "master"
+    }).catch(err => {
+        console.log("Error getting pull requests for this branch ", head);
+        process.exit(1);
+    });
+
+    if ( listOfExistingPullRequests && Array.isArray(listOfExistingPullRequests.data) && listOfExistingPullRequests.data.length > 0) {
+        console.log("New pull request not needed, proceed to complete the build.");
+        return true;
+    }
+
     await octokit.pulls.create({
         "owner" : owner,
         "repo": "circle_npm_integration",
@@ -24,7 +40,8 @@ async function createPullRequest( arguments, ) {
     }).then(s => {
         console.log("Pull request created successfully ", s);
     }).catch(err => {
-        console.log("Pull request creeation failed ", err);
+        console.log("Error creating pull request", err);
+        process.exit(1);
     });
 }
 
