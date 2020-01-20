@@ -45,29 +45,21 @@ workflows:
           filters:
             branches:
               ignore:
-                - /^release.*/
+                - /^release.*/i
   build-and-deploy:
     jobs:
       - build:
           filters:
             branches:
               only:
-                - /^release.*/
+                - /^release.*/i
       - hold:
           type: approval
           requires:
             - build
-          filters:
-            branches:
-              only:
-                - /^release.*/
       - publish:
           requires:
             - hold
-          filters:
-            branches:
-              only:
-                - /^release.*/
 orbs:
   node: circleci/node@1.1
 version: 2.1
