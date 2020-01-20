@@ -29,6 +29,4 @@ async function createPullRequest( arguments, ) {
     });
 }
 
-createPullRequest(process.argv.slice([2])).catch(err => {
-    return false;
-});
+createPullRequest(process.argv.slice([2]));
