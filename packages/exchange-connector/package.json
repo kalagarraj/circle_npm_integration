@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo \"build test publish with 15 \""
+    "build": "echo \"build test publish with from 05 \""
   },
   "publishConfig": {
     "access": "public"
