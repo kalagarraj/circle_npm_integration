@@ -45,14 +45,14 @@ workflows:
           filters:
             branches:
               ignore:
-                - /^release.*/i
+                - /^release.*/
   build-and-deploy:
     jobs:
       - build:
           filters:
             branches:
               only:
-                - /^release.*/i
+                - /^release.*/
       - hold:
           type: approval
           requires:
