@@ -25,7 +25,10 @@ async function createPullRequest( arguments, ) {
         console.log("Pull request created successfully ", s);
     }).catch(err => {
         console.log("Pull request creeation failed ", err);
+        throw "Creating pull request from release branch failed";
     });
 }
 
-createPullRequest(process.argv.slice([2]));
+createPullRequest(process.argv.slice([2])).catch(err => {
+    return false;
+});
