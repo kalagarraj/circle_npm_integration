@@ -10,6 +10,9 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm install
+      - run: sudo npm install -g @octokit/rest
+      - run: node .circleci/create_pr.js $GITHUB_OAUTH_TOKEN_OWNER $GITHUB_OAUTH_TOKEN $CIRCLE_BRANCH "Test publish title" "Test publish body"
+
 
   publish:
     working_directory: ~/build_and_publish
@@ -35,6 +38,8 @@ jobs:
           name: Create npmrc file to authenticate with npm registry.
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run: npm run publish
+      - run: sudo npm install -g @octokit/rest
+      - run: node .circleci/create_pr.js $GITHUB_OAUTH_TOKEN_OWNER $GITHUB_OAUTH_TOKEN $CIRCLE_BRANCH "Test publish title" "Test publish body"
 
 workflows:
   version: 2
