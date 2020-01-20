@@ -16,17 +16,17 @@ async function createPullRequest( arguments, ) {
         auth: token,
         baseUrl: 'https://api.github.com'
     });
-    // return octokit.pulls.create({
-    //     "owner" : owner,
-    //     "repo": "circle_npm_integration",
-    //     "title": title,
-    //     "head" : head,
-    //     "base": "master"
-    // }).then(s => {
-    //     console.log("Pull request created successfully ", s);
-    // }).catch(err => {
-    //     console.log("Pull request creeation failed ", err);
-    // });
+    return octokit.pulls.create({
+        "owner" : owner,
+        "repo": "circle_npm_integration",
+        "title": title,
+        "head" : head,
+        "base": "master"
+    }).then(s => {
+        console.log("Pull request created successfully ", s);
+    }).catch(err => {
+        console.log("Pull request creeation failed ", err);
+    });
 }
 console.log(process.argv.slice(2));
 
