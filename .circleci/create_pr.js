@@ -24,6 +24,7 @@ async function createPullRequest( arguments, ) {
     }).then(s => {
         console.log("Pull request created successfully ", s);
     }).catch(err => {
+        console.log("Error creating pull request", err);
         const errMessages = err.errors.map(s => s.message).filter(s => s === "A pull request already exists for ".concat(owner).concat(":").concat(head).concat("."));
         //do not exit the process if the only error message is something like "A pull request already exists for <<owner>>:<<head branch>>.
         if(errMessages.length !== 1) {
