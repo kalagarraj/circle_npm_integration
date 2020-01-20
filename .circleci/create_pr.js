@@ -14,7 +14,7 @@ async function createPullRequest( arguments, ) {
         auth: token,
         baseUrl: 'https://api.github.com'
     });
-    return octokit.pulls.create({
+    await octokit.pulls.create({
         "owner" : owner,
         "repo": "circle_npm_integration",
         "title": title,
@@ -27,10 +27,5 @@ async function createPullRequest( arguments, ) {
         console.log("Pull request creeation failed ", err);
     });
 }
-console.log(process.argv.slice(2));
 
-createPullRequest(process.argv.slice([2])).then(s => {
-    console.log("inside then", s);
-}).catch(err => {
-    console.log("inside err", err);
-});
+createPullRequest(process.argv.slice([2]));
