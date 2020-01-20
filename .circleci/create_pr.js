@@ -24,9 +24,17 @@ async function createPullRequest( arguments, ) {
     }).then(s => {
         console.log("Pull request created successfully ", s);
     }).catch(err => {
-        console.log("Pull request creeation failed ", err);
-        process.exit(1);
+        const errMessages = err.errors.map(s => s.message).filter(s => s === "A pull request already exists for ".concat(owner).concat(":").concat(head).concat("."));
+        //do not exit the process if the only error message is something like "A pull request already exists for <<owner>>:<<head branch>>.
+        if(errMessages.length !== 1) {
+            console.log("Error creating pull request", err);
+            //Otherwise exit with non zero to fail the build
+            process.exit(1);
+        }
     });
 }
 
+
 createPullRequest(process.argv.slice([2]));
+
+//createPullRequest(["kalagarraj", "39fc47f382e47999b62df3b62dd89e8c36c8b9da", "ka/pull_request", "publish to npm", "publish body"]);
