@@ -15,6 +15,21 @@ async function createPullRequest( arguments, ) {
         baseUrl: 'https://api.github.com'
     });
 
+    const listOfExistingPullRequests = await octokit.pulls.list( {
+        "owner" : owner,
+        "repo": "circle_npm_integration",
+        "head" : owner.concat(":").concat(head),
+        "base": "master"
+    }).catch(err => {
+        console.log("Error getting pull requests for this branch ", head);
+        process.exit(1);
+    });
+
+    if ( listOfExistingPullRequests && Array.isArray(listOfExistingPullRequests.data) && listOfExistingPullRequests.data.length > 0) {
+        console.log("New pull request not needed, proceed to complete the build.");
+        return true;
+    }
+
     await octokit.pulls.create({
         "owner" : owner,
         "repo": "circle_npm_integration",
@@ -25,19 +40,9 @@ async function createPullRequest( arguments, ) {
     }).then(s => {
         console.log("Pull request created successfully ", s);
     }).catch(err => {
-        const errMessages = Array.isArray(err.errors) ? err.errors.map(s => s.message).filter(s => s === "A pull request already exists for ".concat(owner).concat(":").concat(head).concat(".")) : [];
-        //do not exit the process if the only error message is something like "A pull request already exists for <<owner>>:<<head branch>>.
-        if(errMessages.length !== 1) {
-            //Do not print the err object as it contains github token in the response
-            console.log("Error creating pull request");
-            //Otherwise exit with non zero to fail the build
-            process.exit(1);
-        }
-        console.log("Pull request already exists, Proceed to complete the build");
+        console.log("Error creating pull request", err);
+        process.exit(1);
     });
 }
 
-
 createPullRequest(process.argv.slice([2]));
-
-// createPullRequest(["kalagarraj", "0f3b2e9d58c8e6df79361a38736acbf5c0fd2b5f", "ka/pull_request", "publish to npm", "publish body"]);
