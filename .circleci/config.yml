@@ -13,6 +13,7 @@ jobs:
       - run: sudo npm install -g @octokit/rest
       - run: node .circleci/create_pr.js $GITHUB_OAUTH_TOKEN_OWNER $GITHUB_OAUTH_TOKEN $CIRCLE_BRANCH "Test publish title" "Test publish body"
 
+
   publish:
     working_directory: ~/build_and_publish
     executor:
@@ -37,7 +38,7 @@ jobs:
           name: Create npmrc file to authenticate with npm registry.
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run: npm run publish
-      - run: npm install -g @octokit/rest
+      - run: sudo npm install -g @octokit/rest
       - run: node .circleci/create_pr.js $GITHUB_OAUTH_TOKEN_OWNER $GITHUB_OAUTH_TOKEN $CIRCLE_BRANCH "Test publish title" "Test publish body"
 
 workflows:

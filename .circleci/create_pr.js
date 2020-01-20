@@ -2,15 +2,13 @@ const Octokit = require("@octokit/rest");
 
 async function createPullRequest( arguments, ) {
     if (!Array.isArray(arguments) || arguments.length < 5) {
-        throw "Usage create_pr.js <<token>> <<head branch name>> <<pull request title>> <<pull request information body>>";
+        throw "Usage: create_pr.js <<token>> <<head branch name>> <<pull request title>> <<pull request information body>>";
     }
     const owner = arguments[0];
     const token = arguments[1];
     const head = arguments[2];
     const title = arguments[3];
-    const body = arguments[4]; //not optional
-
-    console.log("creating pr for owner ", owner, " head ", head, " title ", title, " with body ", body);
+    const body = arguments[4];
 
     const octokit = new Octokit({
         auth: token,
@@ -21,7 +19,8 @@ async function createPullRequest( arguments, ) {
         "repo": "circle_npm_integration",
         "title": title,
         "head" : head,
-        "base": "master"
+        "base": "master",
+        "body": body
     }).then(s => {
         console.log("Pull request created successfully ", s);
     }).catch(err => {
