@@ -7,7 +7,6 @@ jobs:
     steps:
       - checkout
       - run: echo -e "$GPG_KEY" | gpg --import
-      - run: gpg --list-secret-keys --keyid-format LONG
       - node/with-cache:
           steps:
             - run: npm install
