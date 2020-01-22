@@ -21,7 +21,7 @@ async function createPullRequest( arguments, ) {
         "head" : owner.concat(":").concat(head),
         "base": "master"
     }).catch(err => {
-        console.log("Error getting pull requests for this branch ", head);
+        console.log("Error getting  pull requests for this branch ", head);
         process.exit(1);
     });
 
