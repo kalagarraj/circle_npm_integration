@@ -10,6 +10,9 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm install
+      - run: sudo npm install -g @octokit/rest
+      - run: node .circleci/create_pr.js
+        
   publish:
     working_directory: ~/build_and_publish
     executor:
