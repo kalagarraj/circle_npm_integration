@@ -1,14 +1,11 @@
 const Octokit = require("@octokit/rest");
 
-async function createPullRequest( arguments, ) {
-    if (!Array.isArray(arguments) || arguments.length < 5) {
-        throw "Usage: create_pr.js <<token>> <<head branch name>> <<pull request title>> <<pull request information body>>";
-    }
-    const owner = arguments[0];
-    const token = arguments[1];
-    const head = arguments[2];
-    const title = arguments[3];
-    const body = arguments[4];
+async function createPullRequest( arguments ) {
+    const owner = process.env.GITHUB_OAUTH_TOKEN_OWNER;
+    const token = process.env.GITHUB_OAUTH_TOKEN;
+    const head = process.env.CIRCLE_BRANCH;
+    const title = "Published PR";
+    const body = "Published new packages";
 
     const octokit = new Octokit({
         auth: token,
@@ -21,7 +18,7 @@ async function createPullRequest( arguments, ) {
         "head" : owner.concat(":").concat(head),
         "base": "master"
     }).catch(err => {
-        console.log("Error getting pull requests for this branch ", head);
+        console.log("Error getting  pull requests for this branch ", head);
         process.exit(1);
     });
 
@@ -30,19 +27,19 @@ async function createPullRequest( arguments, ) {
         return true;
     }
 
-    await octokit.pulls.create({
+    return octokit.pulls.create({
         "owner" : owner,
         "repo": "circle_npm_integration",
         "title": title,
         "head" : head,
         "base": "master",
         "body": body
-    }).then(s => {
-        console.log("Pull request created successfully ", s);
-    }).catch(err => {
-        console.log("Error creating pull request", err);
-        process.exit(1);
     });
 }
 
-createPullRequest(process.argv.slice([2]));
+createPullRequest().then(s => {
+    console.log("build-test-and-deploy: Pull request task completed.", s);
+}).catch(err => {
+    console.log("Error creating pull request", err);
+    process.exit(1);
+});

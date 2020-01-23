@@ -10,6 +10,9 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm install
+      - run: sudo npm install -g @octokit/rest
+      - run: node .circleci/create_pr.js
+        
   publish:
     working_directory: ~/build_and_publish
     executor:
@@ -35,7 +38,7 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run: npm run publish
       - run: sudo npm install -g @octokit/rest
-      - run: node .circleci/create_pr.js $GITHUB_OAUTH_TOKEN_OWNER $GITHUB_OAUTH_TOKEN $CIRCLE_BRANCH "Published PR" "Published new packages"
+      - run: node .circleci/create_pr.js
 
 workflows:
   version: 2
