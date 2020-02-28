@@ -1,7 +1,7 @@
 {
   "name": "circle_npm_integration",
   "version": "1.0.1",
-  "description": "some test",
+  "description": "some test again",
   "main": "index.js",
   "scripts": {
     "test": "echo Running test",
