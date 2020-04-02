@@ -16,6 +16,7 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm install
+      - run: docker container ls
       - run:
           name: Print docker logs
           command: docker logs redis-commerce-sdk
@@ -59,7 +60,7 @@ workflows:
       - build-12:
           filters:
             tags:
-              ignore: /^v.*/
+              only: /^v.*/
   build-test-deploy:
     jobs:
       - build:
