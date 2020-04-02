@@ -9,6 +9,7 @@ jobs:
 
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Run docker instance
           command: docker run -dp 6379:6379 --name redis-commerce-sdk redis:5-alpine
