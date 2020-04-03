@@ -6,17 +6,11 @@ jobs:
     executor:
       name: node/default
       tag: '10.16'
+    docker:
+      - image: redis:5-alpine
 
     steps:
       - checkout
-      - setup_remote_docker
-      - run:
-          name: Run docker instance
-          command: docker run -dp 6379:6379 --name redis-commerce-sdk redis:5-alpine
-      - run: docker container ls
-      - run:
-          name: Print docker logs
-          command: docker logs redis-commerce-sdk
       - node/with-cache:
           steps:
             - run: npm install
@@ -30,14 +24,6 @@ jobs:
       tag: '12.14'
     steps:
       - checkout
-      - setup_remote_docker
-      - run:
-          name: Run docker instance
-          command: docker run -dp 6379:6379 --name redis-commerce-sdk redis:5-alpine
-      - run: docker container ls
-      - run:
-          name: Print docker logs
-          command: docker logs redis-commerce-sdk
       - node/with-cache:
           steps:
             - run: npm install
@@ -65,10 +51,6 @@ workflows:
           filters:
             tags:
               ignore: /^v.*/
-      - build-12:
-          filters:
-            tags:
-              only: /^v.*/
   build-test-deploy:
     jobs:
       - build:
